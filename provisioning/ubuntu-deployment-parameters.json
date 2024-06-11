@@ -1,0 +1,84 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "westus2"
+        },
+        "networkInterfaceName1": {
+            "value": "azurelinuxbuildsandbox219_z1"
+        },
+        "enableAcceleratedNetworking": {
+            "value": true
+        },
+        "subnetName": {
+            "value": "default"
+        },
+        "virtualNetworkId": {
+            "value": "/subscriptions/b8f169b2-5b23-444a-ae4b-19a31b5e3652/resourceGroups/AzureLinuxTestSandbox-202406111431/providers/Microsoft.Network/virtualNetworks/AzureTestSandbox-vnet"
+        },
+        "publicIpAddressName1": {
+            "value": "AzureLinuxBuildSandbox-ip"
+        },
+        "publicIpAddressType": {
+            "value": "Static"
+        },
+        "publicIpAddressSku": {
+            "value": "Standard"
+        },
+        "pipDeleteOption": {
+            "value": "Detach"
+        },
+        "virtualMachineName": {
+            "value": "AzureLinuxBuildSandbox"
+        },
+        "virtualMachineName1": {
+            "value": "AzureLinuxBuildSandbox"
+        },
+        "virtualMachineComputerName1": {
+            "value": "AzureLinuxBuildSandbox"
+        },
+        "virtualMachineRG": {
+            "value": "AzureLinuxTestSandbox-202406111431"
+        },
+        "osDiskType": {
+            "value": "Premium_LRS"
+        },
+        "osDiskDeleteOption": {
+            "value": "Delete"
+        },
+        "virtualMachineSize": {
+            "value": "Standard_D2s_v3"
+        },
+        "nicDeleteOption": {
+            "value": "Detach"
+        },
+        "hibernationEnabled": {
+            "value": false
+        },
+        "adminUsername": {
+            "value": "azluser"
+        },
+        "adminPassword": {
+            "value": "azluserp@ssw0rd!@#"
+        },
+        "patchMode": {
+            "value": "AutomaticByPlatform"
+        },
+        "rebootSetting": {
+            "value": "IfRequired"
+        },
+        "securityType": {
+            "value": "TrustedLaunch"
+        },
+        "secureBoot": {
+            "value": true
+        },
+        "vTPM": {
+            "value": true
+        },
+        "virtualMachine1Zone": {
+            "value": "1"
+        }
+    }
+}
