@@ -17,8 +17,8 @@ interface VMContentProps {
   vmImage: string;
   description: string;
   status: string;
+  setStatus: React.Dispatch<React.SetStateAction<string>>;
 }
-
 const items: MenuProps["items"] = [
   {
     key: "1",
@@ -61,6 +61,7 @@ const items: MenuProps["items"] = [
 
 const App: React.FC = () => {
   const [selectedKey, setSelectedKey] = useState("1");
+  const [status, setStatus] = useState("Active");
 
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -69,13 +70,43 @@ const App: React.FC = () => {
   const handleMenuClick = (e: { key: string }) => {
     setSelectedKey(e.key);
   };
-  
+
   const renderVMContent = ({
     title,
     vmImage,
     description,
     status,
+    setStatus,
   }: VMContentProps) => {
+    const handleProvisionClick = async () => {
+      // Update status to "Provisioning"
+      setStatus("Provisioning");
+
+      try {
+        const response = await fetch("http://10.137.196.214:3000/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        console.log("Success:", data);
+
+        // Update status based on response
+        setStatus("Active");
+      } catch (error) {
+        console.error("Error:", error);
+
+        // Revert status back to previous state on error
+        setStatus("Inactive");
+      }
+    };
+
     return (
       <div className="container">
         <h1>{title}</h1>
@@ -91,7 +122,9 @@ const App: React.FC = () => {
             <span style={{ fontWeight: "bold" }}>Sandbox status: </span>{" "}
             {status}
           </p>
-          <Button type="primary">Provision VM</Button>
+          <Button type="primary" onClick={handleProvisionClick}>
+            Provision VM
+          </Button>
           <Button type="primary" danger>
             Delete VM
           </Button>
@@ -99,6 +132,7 @@ const App: React.FC = () => {
       </div>
     );
   };
+
   const renderContent = () => {
     switch (selectedKey) {
       case "sub1":
@@ -106,28 +140,32 @@ const App: React.FC = () => {
           title: "Basic Ubuntu VM",
           vmImage: "Ubuntu 22.04",
           description: "This is a sandbox for Ubuntu 22.04 VMs.",
-          status: "Inactive",
+          status,
+          setStatus,
         });
       case "sub2":
         return renderVMContent({
           title: "CBL-Mariner Build Environment",
-          vmImage: "Ubuntu 22.04",
+          vmImage: "CBL-Mariner",
           description: "This is a build environment for CBL-Mariner.",
-          status: "Inactive",
+          status,
+          setStatus,
         });
       case "sub3":
         return renderVMContent({
           title: "Base Images Test Environment",
-          vmImage: "Ubuntu 22.04",
+          vmImage: "Base Images",
           description: "This is a test environment for base images.",
-          status: "Inactive",
+          status,
+          setStatus,
         });
       case "sub4":
         return renderVMContent({
           title: "Custom Environment",
-          vmImage: "Ubuntu 22.04",
+          vmImage: "Custom Image",
           description: "This is a custom environment.",
-          status: "Inactive",
+          status,
+          setStatus,
         });
       default:
         return (

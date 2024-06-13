@@ -2,15 +2,19 @@
 const express = require('express');
 const { exec } = require('child_process');
 const path = require('path');
+const cors = require('cors');
 
 // Create an instance of Express
 const app = express();
 
+// Use CORS middleware
+app.use(cors());
+
+// Define base route
 // Define a route
 app.get('/', (req, res) => {
-    res.send('Hello, World!');
+  res.json({ message: 'Hello, World!' });
 });
-
 
 // Define a route to run the Bash script
 app.get('/run-script', (req, res) => {
@@ -32,6 +36,7 @@ app.get('/run-script', (req, res) => {
       res.send(`Script output: ${stdout}`);
     });
   });
+
 // Start the server
 const port = process.env.PORT || 3000; // Use the PORT environment variable if available, otherwise use port 3000
 app.listen(port, () => {
