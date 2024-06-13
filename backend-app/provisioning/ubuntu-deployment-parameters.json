@@ -6,19 +6,54 @@
             "value": "westus2"
         },
         "networkInterfaceName1": {
-            "value": "azurelinuxbuildsandbox219_z1"
+            "value": "azurelinuxsandbox954_z1"
         },
         "enableAcceleratedNetworking": {
             "value": true
         },
+        "networkSecurityGroupName": {
+            "value": "AzureLinuxSandbox-nsg"
+        },
+        "networkSecurityGroupRules": {
+            "value": [
+                {
+                    "name": "SSH",
+                    "properties": {
+                        "priority": 300,
+                        "protocol": "TCP",
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "22"
+                    }
+                }
+            ]
+        },
         "subnetName": {
             "value": "default"
         },
-        "virtualNetworkId": {
-            "value": "/subscriptions/b8f169b2-5b23-444a-ae4b-19a31b5e3652/resourceGroups/AzureLinuxTestSandbox-202406111431/providers/Microsoft.Network/virtualNetworks/AzureTestSandbox-vnet"
+        "virtualNetworkName": {
+            "value": "AzureLinuxSandbox-vnet"
+        },
+        "addressPrefixes": {
+            "value": [
+                "10.0.0.0/16"
+            ]
+        },
+        "subnets": {
+            "value": [
+                {
+                    "name": "default",
+                    "properties": {
+                        "addressPrefix": "10.0.0.0/24"
+                    }
+                }
+            ]
         },
         "publicIpAddressName1": {
-            "value": "AzureLinuxBuildSandbox-ip"
+            "value": "AzureLinuxSandbox-ip"
         },
         "publicIpAddressType": {
             "value": "Static"
@@ -30,16 +65,16 @@
             "value": "Detach"
         },
         "virtualMachineName": {
-            "value": "AzureLinuxBuildSandbox"
+            "value": "AzureLinuxSandbox"
         },
         "virtualMachineName1": {
-            "value": "AzureLinuxBuildSandbox"
+            "value": "AzureLinuxSandbox"
         },
         "virtualMachineComputerName1": {
-            "value": "AzureLinuxBuildSandbox"
+            "value": "AzureLinuxSandbox"
         },
         "virtualMachineRG": {
-            "value": "AzureLinuxTestSandbox-202406111431"
+            "value": "MarketplacePreviewRG"
         },
         "osDiskType": {
             "value": "Premium_LRS"
@@ -58,9 +93,6 @@
         },
         "adminUsername": {
             "value": "azluser"
-        },
-        "adminPassword": {
-            "value": "azluserp@ssw0rd!@#"
         },
         "patchMode": {
             "value": "AutomaticByPlatform"
