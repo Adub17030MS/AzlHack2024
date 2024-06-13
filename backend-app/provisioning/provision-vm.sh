@@ -3,7 +3,7 @@
 set -e
 
 ROOT_FOLDER=$(pwd)
-SUBSCRIPTION_ID="" # use b8f169b2-5b23-444a-ae4b-19a31b5e3652 for EdgeOS_Mariner_Platform_dev
+SUBSCRIPTION_ID="b8a0db63-c5fa-4198-8e2a-f9d6ff52465e" # use b8f169b2-5b23-444a-ae4b-19a31b5e3652 for EdgeOS_Mariner_Platform_dev
 RESOURCE_GROUP_BASE_NAME="AzureLinuxTestSandbox"
 DATE_STRING=$(date +%Y%m%d%H%M)
 LOCATION="West US2"

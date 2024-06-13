@@ -1,0 +1,29 @@
+/* Ensure the outer container takes the full height of the viewport and centers its content */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    height: 100vh;
+    /* text-align: center; */
+  }
+  
+  /* Center content inside the inner div
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  } */
+  
+  .content h1 {
+    margin: 10px 0; /* Add some margin to separate the headers */
+  }
+  
+  .content button {
+    margin: 10px 5px; /* Add some margin to separate the buttons */
+  }
+  
+  p {
+    font-size: 20px;
+  }
