@@ -32,3 +32,9 @@ sudo ln -vsf /usr/lib/go-1.20/bin/gofmt /usr/bin/gofmt
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 sudo usermod -aG docker $USER
+
+pushd $HOME
+
+git clone https://github.com/microsoft/azurelinux.git
+
+popd

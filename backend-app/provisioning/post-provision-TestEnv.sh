@@ -23,3 +23,8 @@ sudo mv virtctl /usr/local/bin/
 
 # Add poetry to PATH.
 export PATH="$HOME/.local/bin:$PATH"
+
+# Install and configure Docker.
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker $USER
