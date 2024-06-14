@@ -94,6 +94,9 @@
         "adminUsername": {
             "value": "azluser"
         },
+        "adminPublicKey": {
+            "value": "@KEY_HERE@"
+        },
         "patchMode": {
             "value": "AutomaticByPlatform"
         },

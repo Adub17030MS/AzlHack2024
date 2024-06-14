@@ -217,6 +217,14 @@
                             "automaticByPlatformSettings": {
                                 "rebootSetting": "[parameters('rebootSetting')]"
                             }
+                        },
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
+                                    "keyData": "[parameters('adminPublicKey')]"
+                                }
+                            ]
                         }
                     }
                 },
