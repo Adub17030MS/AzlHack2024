@@ -19,8 +19,8 @@ SSH_KEY_BASE_LOCATION="$HOME/.ssh"
 PRIVATE_KEY_LOCATION="$SSH_KEY_BASE_LOCATION"/"$SSH_KEY_FILE_NAME"
 PUBLIC_KEY_LOCATION="$SSH_KEY_BASE_LOCATION"/"$SSH_KEY_FILE_NAME.pub"
 
-RESOURCE_GROUP_NAME="AzureLinuxTestSandbox-202406131633"
-#RESOURCE_GROUP_NAME="${RESOURCE_GROUP_BASE_NAME}-${DATE_STRING}"
+# RESOURCE_GROUP_NAME="AzureLinuxTestSandbox-202406131829"
+RESOURCE_GROUP_NAME="${RESOURCE_GROUP_BASE_NAME}-${DATE_STRING}"
 
 echo "PWD: $ROOT_FOLDER"
 
@@ -59,13 +59,14 @@ provision_vm() {
 
     echo "Deploying VM to resource group $RESOURCE_GROUP_NAME"
 
-    echo "$TEMPLATE_FILE"
-
     az deployment group create \
         --name "$deployment_name" \
         --resource-group "$RESOURCE_GROUP_NAME" \
         --template-file "$TEMPLATE_FILE" \
         --parameters "$FILLED_PARAMETER_FILE_LOCATION"
+
+    echo "VM deployment complete, sleeping for 10 seconds to let the VM start up"
+    sleep 10
 }
 
 generate_ssh_key() {
@@ -108,18 +109,23 @@ echo "finished provisioning the VM with IP $VM_IP"
 
 echo "Installing requirements:"
 
-
-POST_PROVISION_SCRIPT_NAME="post-provision.sh"
+POST_PROVISION_SCRIPT_NAME=$1
 POST_PROVISION_SCRIPT_LOCATION="$ROOT_FOLDER/provisioning/$POST_PROVISION_SCRIPT_NAME"
 POST_INSTALL_VM_FOLDER_LOCATION="/home/azluser/postinstall"
+
+ssh-keygen -f "$HOME/.ssh/known_hosts" -R "$VM_IP"
 
 echo "sending $POST_PROVISION_SCRIPT_NAME to the VM in location $POST_INSTALL_VM_FOLDER_LOCATION"
 
 # create director for postinstall scripts to live on the target VM
-ssh -i $PRIVATE_KEY_LOCATION "azluser@$VM_IP" "mkdir -p $POST_INSTALL_VM_FOLDER_LOCATION"
+echo "creating directory $POST_INSTALL_VM_FOLDER_LOCATION on the VM"
+ssh -i $PRIVATE_KEY_LOCATION -o StrictHostKeyChecking=no "azluser@$VM_IP" "mkdir -p $POST_INSTALL_VM_FOLDER_LOCATION"
 
+echo "copying $POST_PROVISION_SCRIPT_NAME to the VM"
 scp -i $PRIVATE_KEY_LOCATION "$POST_PROVISION_SCRIPT_LOCATION" "azluser@$VM_IP":$POST_INSTALL_VM_FOLDER_LOCATION
 
-echo "running $POST_PROVISION_SCRIPT_NAME on the VM"
+echo "disable ubuntu pop-ups"
+ssh -i $PRIVATE_KEY_LOCATION -t "azluser@$VM_IP" "sudo apt-get remove -y needrestart"
 
-ssh -i $PRIVATE_KEY_LOCATION "azluser@$VM_IP" "sudo $POST_INSTALL_VM_FOLDER_LOCATION/$POST_PROVISION_SCRIPT_NAME"
+echo "running $POST_PROVISION_SCRIPT_NAME on the VM"
+ssh -i $PRIVATE_KEY_LOCATION -t "azluser@$VM_IP" "$POST_INSTALL_VM_FOLDER_LOCATION/$POST_PROVISION_SCRIPT_NAME"

@@ -83,7 +83,7 @@ const App: React.FC = () => {
       setStatus("Provisioning");
 
       try {
-        const response = await fetch("http://10.137.196.214:3000/", {
+        const response = await fetch("http://172.18.70.176:3000/provision-build-sandbox", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

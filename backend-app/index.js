@@ -17,8 +17,8 @@ app.get('/', (req, res) => {
 });
 
 // Define a route to run the Bash script
-app.get('/run-script', (req, res) => {
-    const scriptPath = path.join(__dirname, 'provisioning/provision-vm.sh');
+app.get('/provision-build-sandbox', (req, res) => {
+    const scriptPath = path.join(__dirname, 'provisioning/provision-vm.sh post-provision-BuildEnv.sh');
     
     // Execute the Bash script
     exec(scriptPath, (error, stdout, stderr) => {
@@ -27,13 +27,15 @@ app.get('/run-script', (req, res) => {
         return res.status(500).send(`Error executing script: ${error.message}`);
       }
   
-      if (stderr) {
-        console.error(`Script error output: ${stderr}`);
-        return res.status(500).send(`Script error output: ${stderr}`);
-      }
-  
       console.log(`Script output: ${stdout}`);
-      res.send(`Script output: ${stdout}`);
+      // if (stderr) {
+      //   console.error(`Script error output: ${stderr}`);
+      //   return res.status(500).send(`Script error output: ${stderr}`);
+      // }
+  
+      // res.json(`Script output: ${stdout}`);
+      return res.status(200).json({ message: stdout });
+
     });
   });
 

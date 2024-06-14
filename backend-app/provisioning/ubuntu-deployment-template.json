@@ -88,6 +88,9 @@
         },
         "virtualMachine1Zone": {
             "type": "string"
+        },
+        "adminPublicKey": {
+            "type": "secureString"
         }
     },
     "variables": {
